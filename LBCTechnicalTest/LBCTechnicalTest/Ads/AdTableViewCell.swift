@@ -30,39 +30,43 @@ final class AdTableViewCell: UITableViewCell {
         // Create a vertical stack view
         self.backgroundColor = .white
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = 5
         stackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(stackView)
-        stackView.addArrangedSubview(adImageView)
         
-        stackView.addArrangedSubview(adPriceLabel)
-        adPriceLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(16))
-        adPriceLabel.textColor = .black
+        stackView.addArrangedSubview(adImageView)
+        adImageView.contentMode = .scaleAspectFill
+        adImageView.clipsToBounds = true
+        adImageView.layer.cornerRadius = 10
         
         stackView.addArrangedSubview(adTitleLabel)
-        adTitleLabel.font = UIFont.systemFont(ofSize: CGFloat(16))
-        adTitleLabel.textColor = .lightGray
+        adTitleLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        adTitleLabel.textColor = .darkGray
         adTitleLabel.numberOfLines = 0 // Allow multiline description
+        
+        stackView.addArrangedSubview(adPriceLabel)
+        adPriceLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        adPriceLabel.textColor = .darkGray
 
         stackView.addArrangedSubview(adCategoryLabel)
-        adCategoryLabel.font = UIFont.systemFont(ofSize: CGFloat(16))
-        adCategoryLabel.textColor = .lightGray
+        adCategoryLabel.font = UIFont.systemFont(ofSize: 12)
+        adCategoryLabel.textColor = .darkGray
         
         adIsUrgent.text = "Urgent"
-        adIsUrgent.textAlignment = .center
-        adIsUrgent.backgroundColor = .purple
-        adIsUrgent.font = UIFont.systemFont(ofSize: CGFloat(12))
+        adIsUrgent.font = UIFont.systemFont(ofSize: 12)
         adIsUrgent.textColor = .white
+        adIsUrgent.backgroundColor = .purple
         adIsUrgent.layer.cornerRadius = 5
-        adIsUrgent.layer.masksToBounds = true // Clip to bounds to apply the corner radius
+        adIsUrgent.layer.masksToBounds = true
+        adIsUrgent.textAlignment = .center
         adIsUrgent.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(adIsUrgent)
 
         
         // Add constraints for the stack view
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 20),
-            stackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            stackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10),
+            stackView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
@@ -71,7 +75,7 @@ final class AdTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             adImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             adImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            adImageView.heightAnchor.constraint(equalToConstant: 150)
+            adImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
         // Add constraints for the adIsUrgent

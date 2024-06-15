@@ -14,6 +14,12 @@ final class AdsListViewController: UIViewController {
     private var viewModel = AdsListViewModel()
     private var subscriptions = Set<AnyCancellable>()
     
+    private let errorLabel: UILabel = {
+        let errorLabel = UILabel()
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        return errorLabel
+    }()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,6 +38,12 @@ final class AdsListViewController: UIViewController {
         viewModel.updateResult.sink { [weak self] value in
             if value {
                 self?.tableView.reloadData()
+                self?.tableView.isHidden = false
+                self?.errorLabel.isHidden = true
+            } else {
+                self?.errorLabel.isHidden = false
+                self?.tableView.isHidden = true
+                self?.errorLabel.text = self?.viewModel.errorMessage
             }
         }.store(in: &subscriptions)
     }
@@ -49,7 +61,7 @@ extension AdsListViewController {
             let appearance = UINavigationBarAppearance()
             appearance.backgroundColor = .orange
             appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            
+            navigationBar.tintColor = UIColor.white
             navigationBar.standardAppearance = appearance
             navigationBar.scrollEdgeAppearance = appearance
         }
@@ -65,18 +77,34 @@ extension AdsListViewController {
     }
     
     private func setViews() {
+        
+        // Configure errorLabel
+        errorLabel.textAlignment = .center
+        errorLabel.textColor = .red
+        errorLabel.numberOfLines = 0
+        errorLabel.isHidden = true // Initially hidden
+        view.addSubview(errorLabel)
+        
         // Add tableView to the view
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(AdTableViewCell.self, forCellReuseIdentifier: "cell")
+        view.backgroundColor = .white
         view.addSubview(tableView)
+        
+        // Remove separator lines
+        tableView.separatorStyle = .none
         
         // Set up constraints
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            errorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            errorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
     }

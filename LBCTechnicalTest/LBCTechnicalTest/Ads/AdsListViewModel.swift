@@ -36,6 +36,7 @@ final class AdsListViewModel {
                 } else {
                     self.errorMessage = "An error occurred"
                 }
+                updateResult.send(false)
             }
         }
     }

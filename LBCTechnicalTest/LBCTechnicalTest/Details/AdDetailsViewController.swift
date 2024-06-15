@@ -32,7 +32,7 @@ class AdDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        title = adDetailsViewModel.title
         view.backgroundColor = .white
         setupViews()
     }
@@ -40,7 +40,7 @@ class AdDetailsViewController: UIViewController {
     private func setupViews() {
         // Setup stack view
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         
@@ -92,12 +92,12 @@ class AdDetailsViewController: UIViewController {
     
     private func setupUrgentLabel() {
         adIsUrgent.text = "Urgent"
-        adIsUrgent.textAlignment = .center
-        adIsUrgent.backgroundColor = .purple
-        adIsUrgent.font = UIFont.systemFont(ofSize: CGFloat(12))
+        adIsUrgent.font = UIFont.systemFont(ofSize: 12)
         adIsUrgent.textColor = .white
+        adIsUrgent.backgroundColor = .purple
         adIsUrgent.layer.cornerRadius = 5
-        adIsUrgent.layer.masksToBounds = true // Clip to bounds to apply the corner radius
+        adIsUrgent.layer.masksToBounds = true
+        adIsUrgent.textAlignment = .center
         adIsUrgent.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(adIsUrgent)
         
@@ -111,9 +111,9 @@ class AdDetailsViewController: UIViewController {
     }
     
     private func setupTitleLabel() {
-        adTitleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        adTitleLabel.textColor = .black
-        adTitleLabel.numberOfLines = 0
+        adTitleLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        adTitleLabel.textColor = .darkGray
+        adTitleLabel.numberOfLines = 0 // Allow multiline description
         adTitleLabel.text = adDetailsViewModel.title
         adTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(adTitleLabel)
@@ -124,8 +124,9 @@ class AdDetailsViewController: UIViewController {
     }
     
     private func setupPriceLabel() {
-        adPriceLabel.font = UIFont.systemFont(ofSize: 16)
-        adPriceLabel.textColor = .black
+        stackView.addArrangedSubview(adPriceLabel)
+        adPriceLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        adPriceLabel.textColor = .darkGray
         adPriceLabel.text = adDetailsViewModel.price
         adPriceLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(adPriceLabel)
@@ -136,8 +137,8 @@ class AdDetailsViewController: UIViewController {
     }
     
     private func setupCategoryLabel() {
-        adCategoryLabel.font = UIFont.systemFont(ofSize: 16)
-        adCategoryLabel.textColor = .black
+        adCategoryLabel.font = UIFont.systemFont(ofSize: 13)
+        adCategoryLabel.textColor = .darkGray
         adCategoryLabel.text = adDetailsViewModel.categoryName
         adCategoryLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(adCategoryLabel)
@@ -148,8 +149,8 @@ class AdDetailsViewController: UIViewController {
     }
     
     private func setupCreationDateLabel() {
-        adCreationDateLabel.font = UIFont.systemFont(ofSize: 16)
-        adCreationDateLabel.textColor = .black
+        adCreationDateLabel.font = UIFont.systemFont(ofSize: 13)
+        adCreationDateLabel.textColor = .darkGray
         adCreationDateLabel.text = "Created on: \(adDetailsViewModel.creationDate)"
         adCreationDateLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(adCreationDateLabel)
@@ -160,10 +161,10 @@ class AdDetailsViewController: UIViewController {
     }
     
     private func setupDescriptionLabel() {
-        adDescriptionLabel.font = UIFont.systemFont(ofSize: 16)
-        adDescriptionLabel.textColor = .black
+        adDescriptionLabel.font = UIFont.systemFont(ofSize: 13)
+        adDescriptionLabel.textColor = .darkGray
         adDescriptionLabel.numberOfLines = 0
-        adDescriptionLabel.text = "Description:\n\n\(adDetailsViewModel.description)"
+        adDescriptionLabel.text = "Description:\n\(adDetailsViewModel.description)"
         adDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(adDescriptionLabel)
         NSLayoutConstraint.activate([
@@ -174,8 +175,8 @@ class AdDetailsViewController: UIViewController {
     
     private func setupSiretLabel() {
         if let siret = adDetailsViewModel.siret {
-            adSiretLabel.font = UIFont.systemFont(ofSize: 16)
-            adSiretLabel.textColor = .black
+            adSiretLabel.font = UIFont.systemFont(ofSize: 13)
+            adSiretLabel.textColor = .darkGray
             adSiretLabel.text = "SIRET: \(siret)"
             adSiretLabel.translatesAutoresizingMaskIntoConstraints = false
             stackView.addArrangedSubview(adSiretLabel)
